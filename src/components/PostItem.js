@@ -14,9 +14,7 @@ class PostItem extends Component {
         const {item}=this.props
         return ( 
             <div className='post-item-container'>
-            <h2>Id : {item._id}</h2>
-            <h3>title : {item.title}</h3>
-            <h3>user : {item.user}</h3>
+            <h3>Title : {item.title}</h3>
             <Link to={`/detailsPost/${item._id}`}>
             <button>Details</button>
             </Link>

@@ -3,6 +3,7 @@ const Post = require ('../models/postModel') ;
 const router = express.Router();
 const mongoose = require("mongoose");
 
+// Get all the posts
 
 router.get("/get-posts", (req, res, next) => {
   Post.find()
@@ -20,11 +21,20 @@ router.get("/get-posts", (req, res, next) => {
     });
 });
 
+//  Add a post
+
 router.post("/add-post", (req, res, next) => {
   const post = new Post({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
-    user: req.body.user
+    points: req.body.points,
+    user: req.body.user,
+    time: req.body.time,
+    time_ago: req.body.time_ago,
+    comments_count: req.body.comments_count,
+    type: req.body.type,
+    url: req.body.url,
+    domain: req.body.domain,
   });
   post
     .save()
@@ -43,7 +53,10 @@ router.post("/add-post", (req, res, next) => {
     });
 });
 
-router.get("/:postId", (req, res, next) => {
+
+// Get post details
+
+router.get("/get-postDetails/:postId", (req, res, next) => {
   const id = req.params.postId;
   Post.findById(id)
     .exec()
@@ -63,8 +76,7 @@ router.get("/:postId", (req, res, next) => {
     });
 });
 
-
-
+// delele a post
 
 router.delete("/delete-post/:postId", (req, res, next) => {
   const id = req.params.postId;
