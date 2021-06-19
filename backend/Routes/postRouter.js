@@ -1,5 +1,5 @@
-const express = require ( 'express');
-const Post = require ('../models/postModel') ;
+const express = require("express");
+const Post = require("../models/postModel");
 const router = express.Router();
 const mongoose = require("mongoose");
 
@@ -8,15 +8,14 @@ const mongoose = require("mongoose");
 router.get("/get-posts", (req, res, next) => {
   Post.find()
     .exec()
-    .then(docs => {
+    .then((docs) => {
       console.log(docs);
       res.status(200).json(docs);
-  
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({
-        error: err
+        error: err,
       });
     });
 });
@@ -38,21 +37,20 @@ router.post("/add-post", (req, res, next) => {
   });
   post
     .save()
-    .then(result => {
+    .then((result) => {
       console.log(result);
       res.status(201).json({
         message: "Handling POST requests to /posts",
-        createdPost: result
+        createdPost: result,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({
-        error: err
+        error: err,
       });
     });
 });
-
 
 // Get post details
 
@@ -60,7 +58,7 @@ router.get("/get-postDetails/:postId", (req, res, next) => {
   const id = req.params.postId;
   Post.findById(id)
     .exec()
-    .then(doc => {
+    .then((doc) => {
       console.log("From database", doc);
       if (doc) {
         res.status(200).json(doc);
@@ -70,7 +68,7 @@ router.get("/get-postDetails/:postId", (req, res, next) => {
           .json({ message: "No valid entry found for provided ID" });
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({ error: err });
     });
@@ -82,20 +80,15 @@ router.delete("/delete-post/:postId", (req, res, next) => {
   const id = req.params.postId;
   Post.remove({ _id: id })
     .exec()
-    .then(result => {
+    .then((result) => {
       res.status(200).json(result);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json({
-        error: err
+        error: err,
       });
     });
 });
 
 module.exports = router;
-
-
-
-
-

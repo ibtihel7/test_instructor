@@ -1,77 +1,68 @@
-import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
-import axios from 'axios'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import axios from "axios";
+import Button from "@material-ui/core/Button";
+
 class DetailsPost extends Component {
-    constructor(props)
-    {
-        super(props)
-        this.state={
-            _id:'',
-            title:'',
-            points:0,
-            user:'',
-            time:0,
-            time_ago:'',
-            comments_count:0,
-            type:'',
-            url:'',
-            domain:''
+  constructor(props) {
+    super(props);
+    this.state = {
+      _id: "",
+      title: "",
+      points: 0,
+      user: "",
+      time: 0,
+      time_ago: "",
+      comments_count: 0,
+      type: "",
+      url: "",
+      domain: "",
+    };
+  }
 
-        }
-    }
+  componentDidMount = () => {
+    this.setState({
+      ...this.props.posts.filter(
+        (el) => parseInt(el._id) === parseInt(this.props._id)
+      )[0],
+    });
+    axios.get(`/get-postDetails/${this.state._id}`).then((res)=>this.props.updatePostReducer(res.data))
 
+  };
 
-    componentDidMount=()=>
+  render() {
+    console.log(this.props.posts);
+    console.log(this.state);
 
-    {
-        this.setState({
-            ...this.props.posts.filter(el=> parseInt (el._id) === parseInt(this.props._id))[0]
-        })
-        axios.get(`/get-postDetails/${this.state._id}`).then((res)=>this.props.updatePostReducer(res.data))
+    return (
+      <div className="add-post-container">
+        <h1> Post Details</h1>
+        <h4>Id : {this.state._id}</h4>
+        <h4>Title : {this.state.title}</h4>
+        <h4>Points : {this.state.points}</h4>
+        <h4>User : {this.state.user}</h4>
+        <h4>Time : {this.state.time}</h4>
+        <h4>Time Ago : {this.state.time_ago}</h4>
+        <h4>Comments Count : {this.state.comments_count}</h4>
+        <h4>Type : {this.state.type}</h4>
+        <h4>Url : {this.state.url}</h4>
+        <h4>Domain : {this.state.domain}</h4>
 
-    }
-
-
-
-   
-
-    render() { 
-        console.log(this.props.posts)
-        console.log(this.state)
-
-        return ( 
-            <div className='add-post-container'>
-            <h1> Post Details</h1>
-            
-                <h3>Id : {this.state._id}</h3>
-                <h3>Title : {this.state.title}</h3>
-                <h3>Points : {this.state.points}</h3>
-                <h3>User : {this.state.user}</h3>
-                <h3>Time : {this.state.time}</h3>
-                <h3>Time Ago : {this.state.time_ago}</h3>
-                <h3>Comments Count : {this.state.comments_count}</h3>
-                <h3>Type : {this.state.type}</h3>
-                <h3>Url : {this.state.url}</h3>
-                <h3>Domain : {this.state.domain}</h3>
-            
-             <Link to='/'>
-             <button>Back to home page </button>
-             </Link>
-
-            </div> 
-         );
-    }
+        <Link to="/" style={{ color: "inherit", textDecoration: "inherit" }}>
+          <Button variant="contained" color="primary">
+            Back to home page
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 }
 
-const mapStateToProps=(state)=>
-{
-    return {
-        posts:state.postReducer
-    }
-} 
+const mapStateToProps = (state) => {
+  return {
+    posts: state.postReducer,
+  };
+};
 
-
-
- 
-export default connect(mapStateToProps,null)(DetailsPost);
+export default connect(mapStateToProps, null)(DetailsPost);
