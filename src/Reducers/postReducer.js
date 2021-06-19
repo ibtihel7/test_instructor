@@ -1,6 +1,6 @@
 var posts = [
   {
-    _id: 25650697,
+    _id: '25650697',
     title: "Gene Wolfe Turned Science Fiction into High Art (2019)",
     points: 103,
     user: "samclemens",
@@ -12,7 +12,7 @@ var posts = [
     domain: "theringer.com",
   },
   {
-    _id: 25649740,
+    _id: '25649740',
     title: "Clip: Connecting Text and Images",
     points: 105,
     user: "sama",
@@ -25,7 +25,7 @@ var posts = [
   },
 
   {
-    _id: 25649557,
+    _id: '25649557',
     title: "DALL·E: Creating Images from Text",
     points: 906,
     user: "todsacerdoti",
@@ -38,7 +38,7 @@ var posts = [
   },
 
   {
-    _id: 25655066,
+    _id: '25655066',
     title: "US doctor forgives $650k in medical bills for cancer patients",
     points: 114,
     user: "williamsharris",

@@ -22,12 +22,13 @@ class DetailsPost extends Component {
   }
 
   componentDidMount = () => {
+  
     this.setState({
       ...this.props.posts.filter(
-        (el) => parseInt(el._id) === parseInt(this.props._id)
+        (el) => (el._id) === (this.props._id)
       )[0],
     });
-    axios.get(`/get-postDetails/${this.state._id}`).then((res)=>this.props.updatePostReducer(res.data))
+    axios.get(`/get-postDetails/${(this.state._id)}`).then((res)=>this.props.updatePostReducer(res.data))
 
   };
 
