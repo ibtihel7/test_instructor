@@ -1,53 +1,89 @@
 const express = require ( 'express');
 const Post = require ('../models/postModel') ;
-const postRouter = express.Router();
-// postRouter.route('/')
-//     .get((req, res) => {
-//         Post.find({}, (err, posts) => {
-//             res.json(posts)
-//         })  
-//     })
-//     .post((req, res) => {
-//         let post = new Post(req.body);
-//         post.save();
-//         res.status(201).send(post) 
-//     })
+const router = express.Router();
+const mongoose = require("mongoose");
 
-// // Middleware 
-// postRouter.use('/:postId', (req, res, next)=>{
-//     Post.findById( req.params.postId, (err,post)=>{
-//         if(err)
-//             res.status(500).send(err)
-//         else {
-//             req.post = post;
-//             next()
-//         }
-//     })
 
-// })
-// postRouter.route('/:postId')
-//     .get((req, res) => {
-//         res.json(req.post)
-//     }) // end get Posts/:postId 
- 
-//     .patch((req,res)=>{
-//         if(req.body._id){
-//             delete req.body._id;
-//         }
-//         for( let p in req.body ){
-//             req.post[p] = req.body[p]
-//         }
-//         req.post.save()
-//         res.json(req.post)
-//     })//patch
-//     .delete((req,res)=>{
-//         req.post.remove(err => {
-//             if(err){
-//                 res.status(500).send(err)
-//             }
-//             else{
-//                 res.status(204).send('removed')
-//             }
-//         })
-//     })//delete
-	 
+router.get("/get-posts", (req, res, next) => {
+  Post.find()
+    .exec()
+    .then(docs => {
+      console.log(docs);
+      res.status(200).json(docs);
+  
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+});
+
+router.post("/add-post", (req, res, next) => {
+  const post = new Post({
+    _id: new mongoose.Types.ObjectId(),
+    title: req.body.title,
+    user: req.body.user
+  });
+  post
+    .save()
+    .then(result => {
+      console.log(result);
+      res.status(201).json({
+        message: "Handling POST requests to /posts",
+        createdPost: result
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+});
+
+router.get("/:postId", (req, res, next) => {
+  const id = req.params.postId;
+  Post.findById(id)
+    .exec()
+    .then(doc => {
+      console.log("From database", doc);
+      if (doc) {
+        res.status(200).json(doc);
+      } else {
+        res
+          .status(404)
+          .json({ message: "No valid entry found for provided ID" });
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
+
+
+
+router.delete("/delete-post/:postId", (req, res, next) => {
+  const id = req.params.postId;
+  Post.remove({ _id: id })
+    .exec()
+    .then(result => {
+      res.status(200).json(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+});
+
+module.exports = router;
+
+
+
+
+

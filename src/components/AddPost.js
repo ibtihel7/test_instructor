@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-// import axios from 'axios'
+import axios from 'axios'
 class AddPost extends Component {
 
     handleChange=(e)=>
@@ -11,24 +11,24 @@ class AddPost extends Component {
        })
     }
 
-    addPost=()=>
-    {
-      this.props.addPostReducer({...this.state})
-       
-    }
-
-       // addPost=()=>
+    // addPost=()=>
     // {
-    //   axios.post('/add-post',{...this.state})
-    //    .then(()=>this.props.addPostReducer({...this.state}))
-    //    .catch((err)=>alert(err)) 
+    //   this.props.addPostReducer({...this.state})
+       
     // }
+
+       addPost=()=>
+    {
+      axios.post('/add-post',{...this.state})
+       .then(()=>this.props.addPostReducer({...this.state}))
+       .catch((err)=>alert(err)) 
+    }
     render() { 
         return ( 
             <div className='add-post-container'>
              <h1>Add Post</h1>
-             ID :
-             <input  type='number' name='_id' onChange={this.handleChange}/>
+             {/* ID :
+             <input  type='number' name='_id' onChange={this.handleChange}/> */}
              title :
              <input  type='text' name='title' onChange={this.handleChange}/>
              user :

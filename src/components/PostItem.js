@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-// import axios from 'axios'
+import axios from 'axios'
 class PostItem extends Component {
 
-//     deletePost=()=>
-//     {  const {item} = this.props
-//     axios.delete(`/delete-post/${item._id}`)   
-//   .then(()=>this.props.deletePostReducer(item._id)) 
-//   .catch((err)=>alert(err)) 
-//     }
+    deletePost=()=>
+    {  const {item} = this.props
+    axios.delete(`/delete-post/${item._id}`)   
+  .then(()=>this.props.deletePostReducer(item._id)) 
+  .catch((err)=>alert(err)) 
+    }
     render() { 
         const {item}=this.props
         return ( 
@@ -20,7 +20,7 @@ class PostItem extends Component {
             <Link to={`/detailsPost/${item._id}`}>
             <button>Details</button>
             </Link>
-            {/* <button onClick={this.deletePost}>Delete</button> */}
+            <button onClick={this.deletePost}>Delete</button>
             </div>
          );
     }

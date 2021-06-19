@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom';
-// import axios from 'axios'
+import axios from 'axios'
 import PostItem from './PostItem'
 
 class PostList extends Component {
-//   componentDidMount=()=>{
-//             axios.get('/get-post').then((res)=>this.props.updatePostReducer(res.data))
-//         }
+  componentDidMount=()=>{
+            axios.get('/get-posts').then((res)=>this.props.updatePostReducer(res.data))
+        }
         
     render() { 
         const {posts}= this.props
@@ -23,7 +23,7 @@ class PostList extends Component {
         )
            }
             </div>
-           
+           <br/>
             <Link to='/addPost'>
             <button> Add Post</button>
             </Link>
